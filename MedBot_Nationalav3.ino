@@ -9,10 +9,10 @@ const int emgPin = A0, sunetPin = A1, soundSensorPin = 3, ledPin = 13, buttonPin
 // Praguri pentru servo-uri
 int servoTresholdMin = 500, servoTresholdMax = 2400;
 
-// Stări pentru senzorii de sunet și EMG
+// Stări pentru senzor EMG
 int valEMG = 600;
 
-// Variabile detecție sunet
+// Variabile detecție sunet & mușchi
 bool voiceDetected = false, muscleFlexed = false;
 
 // Pin assignment pentru servo-urile de la degete
@@ -22,7 +22,7 @@ const int fingerPosClosed[] = {2000, 2000, 2000, 2000, 2000};
 // Pin pentru servo-ul de la încheietură
 const int wristServo = 5, wristOpened = 1000, wristClosed = 2000;
 
-// Valoare care ne spune in ce stare se afla mana (este inchisa / deschisa)
+// Valoare care ne spune în ce stare se afla mâna (este închisă / deschisă)
 bool closedHand = false;
 
 void openHand() { 
@@ -86,7 +86,7 @@ void loop() {
     ///Verificam daca sensorul EMG a citit o valoare care a depasit tresholdul
     muscleFlexed = (emgValue > valEMG);    
 
-    ///închidere / Deschidere mână -> Pe bază de prioritate (Prima dată se verifică sunet)
+    ///închidere / Deschidere mână -> Pe bază de prioritate (Prima dată se verifică sunet + dacă s-a apăsat butonul)
     if ((voiceDetected && butonValue==HIGH) || !muscleFlexed)
     {
         Serial.println("Mână deschisă"); 
